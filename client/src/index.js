@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.querySelector("#root")).render(
       </TransactionProvider>
      
     </StyledEngineProvider>
-  </React.StrictMode>
+   </React.StrictMode>
 );
 

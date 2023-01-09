@@ -13,20 +13,19 @@ const getEthereumContract = ()=>{
     return transactionContract;
 }
 
+if(ethereum){
   ethereum.on('accountsChanged', (accounts) => {
-    // Handle the new accounts, or lack thereof.
-    // "accounts" will always be an array, but it can be empty.
     window.location.reload();
     ethereum.removeListener('accountsChanged');
   });
   
   ethereum.on('chainChanged', (chainId) => {
-    // Handle the new chain.
-    // Correctly handling chain changes can be complicated.
-    // We recommend reloading the page unless you have good reason not to.
     window.location.reload();
   });
+}else{
+  console.log("metamask is not installed");
 
+}
 export const TransactionProvider =({children})=>{
 
     const [currentAccount,setCurrentAccount] = useState('');
@@ -61,11 +60,21 @@ export const TransactionProvider =({children})=>{
           console.log(error);
         }
       };
-    
-   
     const checkIfWalletIsConnected = async()=>{
+      if(ethereum){
+        ethereum.on('accountsChanged', (accounts) => {
+          window.location.reload();
+          ethereum.removeListener('accountsChanged');
+        });
+        
+        ethereum.on('chainChanged', (chainId) => {
+          window.location.reload();
+        });
+      }else{
+        console.log("metamask is not installed");
+      }
         try {
-            if(!ethereum) return alert ('please install metamask');
+            if(!ethereum) return alert ('please install metamask1');
             const accounts = await ethereum.request({method:'eth_accounts'});
             if(accounts.length){
                 setCurrentAccount(accounts[0]);
@@ -96,9 +105,7 @@ export const TransactionProvider =({children})=>{
             window.localStorage.setItem("transactionCount", currentTransactionCount);
           }
         } catch (error) {
-          console.log(error);
-    
-          throw new Error("No ethereum object");
+          console.log('To get all transaction connect wallet');
         }
       };
     

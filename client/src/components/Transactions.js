@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
 import Button from '@mui/material/Button';
 import { TransactionContext } from "../context/TransactionContext";
-import SendIcon from '@mui/icons-material/Send';
-// import useFetch from "../hooks/useFetch";
-import dummyData from "../utils/dummyData";
-// import { shortenAddress } from "../utils/shortenAddress";
+
 
 const TransactionsCard = ({ addressTo, addressFrom, timestamp, message, amount }) => {
 
@@ -57,7 +54,7 @@ const Transactions = () => {
           </h3>
         )}
         <div className="flex flex-wrap justify-center items-center mt-10">
-          {[...dummyData, ...transactions].reverse().map((transaction, i) => (
+          {[...transactions].reverse().map((transaction, i) => (
             <TransactionsCard key={i} {...transaction} />
           ))} 
         </div>
